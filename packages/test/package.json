@@ -1,0 +1,52 @@
+{
+  "name": "@amihhs/monorepo-template-test",
+  "type": "module",
+  "version": "1.0.0-beta.1",
+  "description": "monorepo-template test package",
+  "author": {
+    "name": "amihhs",
+    "email": "amihhs369@gmail.com",
+    "url": "https://github.com/amihhs"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/amihhs/monorepo-template",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amihhs/monorepo-template.git",
+    "directory": "packages/test"
+  },
+  "bugs": {
+    "url": "https://github.com/amihhs/monorepo-template"
+  },
+  "keywords": [
+    "template",
+    "monorepo",
+    "monorepo-template"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=16"
+  },
+  "scripts": {
+    "build": "unbuild",
+    "stub": "unbuild --stub",
+    "dev": "esno ./src/index.ts"
+  },
+  "dependencies": {}
+}
