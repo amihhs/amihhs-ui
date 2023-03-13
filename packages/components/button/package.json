@@ -1,8 +1,8 @@
 {
-  "name": "@amihhs/ui-utils",
+  "name": "@amihhs/ui-button",
   "type": "module",
   "version": "0.0.1",
-  "description": "ui-utils package",
+  "description": "button",
   "author": {
     "name": "amihhs",
     "email": "amihhs369@gmail.com",
@@ -13,12 +13,14 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/amihhs/amihhs-ui.git",
-    "directory": "packages/utils"
+    "directory": "packages/component/button"
   },
   "bugs": {
     "url": "https://github.com/amihhs/amihhs-ui"
   },
   "keywords": [
+    "component",
+    "ui",
     "amihhs-ui"
   ],
   "exports": {
@@ -43,8 +45,7 @@
   },
   "scripts": {
     "build": "unbuild",
-    "stub": "unbuild --stub",
-    "dev": "esno ./src/index.ts"
+    "stub": "unbuild --stub"
   },
   "dependencies": {}
 }

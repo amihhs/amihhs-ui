@@ -1,12 +1,3 @@
-# monorepo template
+# amihhs-ui
 
 
-- typescript
-- eslint
-- bumpp
-- esno
-- husky
-- lint-staged
-- commitlint
-- unbuild
-- vitest

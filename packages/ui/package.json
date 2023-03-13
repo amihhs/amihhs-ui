@@ -1,27 +1,27 @@
 {
-  "name": "@amihhs/monorepo-template-test",
+  "name": "@amihhs/ui",
   "type": "module",
-  "version": "1.0.0-beta.1",
-  "description": "monorepo-template test package",
+  "version": "0.0.1",
+  "description": "button",
   "author": {
     "name": "amihhs",
     "email": "amihhs369@gmail.com",
     "url": "https://github.com/amihhs"
   },
   "license": "MIT",
-  "homepage": "https://github.com/amihhs/monorepo-template",
+  "homepage": "https://github.com/amihhs/amihhs-ui",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/amihhs/monorepo-template.git",
+    "url": "git+https://github.com/amihhs/amihhs-ui.git",
     "directory": "packages/test"
   },
   "bugs": {
-    "url": "https://github.com/amihhs/monorepo-template"
+    "url": "https://github.com/amihhs/amihhs-ui"
   },
   "keywords": [
-    "template",
-    "monorepo",
-    "monorepo-template"
+    "component",
+    "ui",
+    "amihhs-ui"
   ],
   "exports": {
     ".": {
@@ -45,8 +45,10 @@
   },
   "scripts": {
     "build": "unbuild",
-    "stub": "unbuild --stub",
-    "dev": "esno ./src/index.ts"
+    "stub": "unbuild --stub"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@amihhs/ui-button": "workspace:*",
+    "@amihhs/ui-utils": "workspace:*"
+  }
 }
