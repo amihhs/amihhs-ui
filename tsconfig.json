@@ -16,8 +16,7 @@
     "skipLibCheck": true,
     "paths": {
       "@amihhs/ui": ["./packages/ui/src/index.ts"],
-      "@amihhs/ui-utils": ["./packages/utils/src/index.ts"],
-      "@amihhs/ui-button": ["./packages/components/button/src/index.ts"]
+      "@amihhs/shared": ["./packages/shared/src/index.ts"]
     }
   }
 }

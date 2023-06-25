@@ -1,8 +1,8 @@
 {
-  "name": "@amihhs/ui-utils",
+  "name": "@amihhs/shared",
   "type": "module",
   "version": "0.0.1",
-  "description": "ui-utils package",
+  "description": "amihhs shared utils",
   "author": {
     "name": "amihhs",
     "email": "amihhs369@gmail.com",
@@ -19,7 +19,9 @@
     "url": "https://github.com/amihhs/amihhs-ui"
   },
   "keywords": [
-    "amihhs-ui"
+    "amihhs",
+    "shared",
+    "utils"
   ],
   "exports": {
     ".": {
@@ -46,5 +48,8 @@
     "stub": "unbuild --stub",
     "dev": "esno ./src/index.ts"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "unbuild": "^0.6.0"
+  }
 }

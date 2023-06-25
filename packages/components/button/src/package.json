@@ -1,8 +1,8 @@
 {
-  "name": "@amihhs/ui",
+  "name": "@amihhs/handlessUI-button",
   "type": "module",
   "version": "0.0.1",
-  "description": "button",
+  "description": "amihhs shared utils",
   "author": {
     "name": "amihhs",
     "email": "amihhs369@gmail.com",
@@ -13,23 +13,17 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/amihhs/amihhs-ui.git",
-    "directory": "packages/test"
+    "directory": "packages/utils"
   },
   "bugs": {
     "url": "https://github.com/amihhs/amihhs-ui"
   },
   "keywords": [
-    "component",
-    "ui",
-    "amihhs-ui"
+    "amihhs",
+    "handless",
+    "UI",
+    "button"
   ],
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.mjs"
-    }
-  },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
@@ -45,10 +39,11 @@
   },
   "scripts": {
     "build": "unbuild",
-    "stub": "unbuild --stub"
+    "stub": "unbuild --stub",
+    "dev": "esno ./src/index.ts"
   },
-  "dependencies": {
-    "@amihhs/ui-button": "workspace:*",
-    "@amihhs/ui-utils": "workspace:*"
+  "dependencies": {},
+  "devDependencies": {
+    "unbuild": "^0.6.0"
   }
 }
