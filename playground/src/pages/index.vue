@@ -4,7 +4,7 @@
 
 <template>
   <div class="grid grid-cols-7">
-    <router-link to="/button">
+    <router-link to="/components/button">
       <button class="btn">
         button
       </button>

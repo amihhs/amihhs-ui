@@ -3,16 +3,15 @@
 layout: home
 
 hero:
-  name: "amihhs-handlessUI"
+  name: "handless-ui"
   text: "Handless ui based on Unocss"
-  tagline: My great project tagline
   actions:
     - theme: brand
-      text: Markdown Examples
+      text: Start
       link: /markdown-examples
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: Components
+      link: /components
 
 features:
   - title: Feature A

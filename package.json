@@ -1,6 +1,5 @@
 {
   "name": "@amihhs/amihhs-ui",
-  "type": "module",
   "version": "0.0.1",
   "private": true,
   "packageManager": "pnpm@7.5.1",
@@ -11,7 +10,7 @@
     "url": "https://github.com/amihhs"
   },
   "scripts": {
-    "play": "pnpm --filter @amihhs/playground-vue3 run dev",
+    "dev": "pnpm -r run dev",
     "build": "rimraf packages/*/dist && esno scripts/copy-files.ts && pnpm -r run build",
     "release": "bumpp -r",
     "test": "vitest",
@@ -19,26 +18,26 @@
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc --noEmit",
     "prepare": "husky install",
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "play": "pnpm -C playground run dev",
+    "docs:dev": "pnpm -C docs run dev",
+    "docs:build": "pnpm -C docs run build",
+    "docs:preview": "pnpm -C docs run preview"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.35.2",
-    "@commitlint/cli": "^17.4.4",
-    "@commitlint/config-conventional": "^17.4.4",
+    "@antfu/eslint-config": "^0.39.5",
+    "@commitlint/cli": "^17.6.6",
+    "@commitlint/config-conventional": "^17.6.6",
     "@commitlint/types": "^17.4.4",
-    "@types/node": "^18.14.2",
-    "bumpp": "^9.0.0",
-    "eslint": "^8.33.0",
+    "@types/node": "^20.3.1",
+    "bumpp": "^9.1.1",
+    "eslint": "^8.43.0",
     "esno": "^0.16.3",
     "husky": "^8.0.3",
-    "lint-staged": "^13.1.2",
-    "typescript": "^4.9.3",
-    "unbuild": "^1.1.2",
-    "unocss": "^0.50.4",
-    "vitepress": "1.0.0-beta.3",
-    "vitest": "^0.29.2"
+    "lint-staged": "^13.2.2",
+    "typescript": "^5.1.3",
+    "unbuild": "^1.2.1",
+    "unocss": "^0.53.3",
+    "vitest": "^0.32.2"
   },
   "lint-staged": {
     "*.{vue,js,ts,jsx,tsx,md,json,yml}": "eslint --fix"
