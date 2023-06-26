@@ -22,7 +22,6 @@ export default defineConfig({
         'display': 'inline-block',
         'vertical-align': 'middle',
       },
-      warn: true,
     }),
     presetWebFonts({
       fonts: {
@@ -33,7 +32,10 @@ export default defineConfig({
     }),
   ],
   transformers: [
-    transformerDirectives(),
+    transformerDirectives({
+      // the defaults
+      applyVariable: ['--at-apply', '--uno-apply', '--uno'],
+    }),
     transformerVariantGroup(),
   ],
 })

@@ -40,6 +40,6 @@
     "vitest": "^0.32.2"
   },
   "lint-staged": {
-    "*.{vue,js,ts,jsx,tsx,md,json,yml}": "eslint --fix"
+    "*.{vue,js,ts,jsx,tsx,md,json,yml},.eslintignore": "eslint --fix"
   }
 }

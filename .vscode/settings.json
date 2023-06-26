@@ -5,7 +5,16 @@
     "source.fixAll.eslint": true
   },
   "editor.formatOnSave": false,
-  "cSpell.words": [],
+  "cSpell.words": [
+    "mingcute"
+  ],
   "vue.codeActions.enabled": false,
-  "unocss.root": ["docs", "playground"]
+  "unocss.root": [
+    "docs",
+    "playground"
+  ],
+  "search.exclude": {
+    "**/node_modules": false,
+    "**/node_modulesss": true
+  }
 }
