@@ -12,15 +12,15 @@ export function generateTemplateStyleCode(options?: GenerateStyleCodeOptions) {
 
   const presetsCode = presets.map(([selector, style]) => {
     return `${selector} {
-      ${style.includes(';') ? style : `${applyVariableKey}: ${style};`}
-    }`
+  ${style.includes(';') ? style : `${applyVariableKey}: ${style};`}
+}`
   }).join('\n')
 
   return `
-    <style ${styleTagConfig(lang, scoped)}>
-      ${presetsCode}
-    </style>
-  `
+<style ${styleTagConfig(lang, scoped)}>
+${presetsCode}
+</style>
+`
 }
 
 export function styleTagConfig(lang: GenerateStyleCodeOptions['lang'], scoped: GenerateStyleCodeOptions['scoped']) {

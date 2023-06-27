@@ -11,8 +11,16 @@
     "up": "taze major -I"
   },
   "dependencies": {
+    "@codemirror/autocomplete": "^6.8.1",
+    "@unocss/autocomplete": "^0.53.4",
+    "@unocss/core": "^0.53.4",
+    "@vue/repl": "^2.3.0",
     "@vueuse/core": "^9.0.0",
+    "lz-string": "^1.5.0",
+    "magic-string": "^0.30.0",
     "nprogress": "^0.2.0",
+    "ofetch": "^1.1.1",
+    "splitpanes": "^3.1.5",
     "vue": "^3.2.37",
     "vue-i18n": "^9.2.2",
     "vue-router": "^4.1.2"
@@ -28,6 +36,7 @@
     "@vue/test-utils": "^2.0.2",
     "jsdom": "^20.0.0",
     "taze": "^0.7.6",
+    "unocss": "^0.53.4",
     "unplugin-auto-import": "^0.10.1",
     "unplugin-vue-components": "^0.21.2",
     "vite": "^3.0.3",

@@ -16,17 +16,17 @@ export function generateTemplatePropsCode(options: GeneratePropsCodeOptions) {
 
 function generateWithDefaultsPropsCode(props: GeneratePropsCodeOptions['props']) {
   const propsCode = Object.entries(props).map(([key, [isRequired, type, defaultValue]]) => {
-    return [`${key}${!isRequired ? '?' : ''}: ${type}`, `${key}: ${defaultValue}`]
+    return [`${key}${!isRequired ? '?' : ''}: ${type}`, `${key}: ${typeof defaultValue === 'string' ? `'${defaultValue}'` : defaultValue}`]
   })
-  const defineCode = propsCode.map(([define]) => define).join(',\n')
-  const defaultCode = propsCode.map(([_, defaultValue]) => defaultValue).join(',\n')
+  const defineCode = propsCode.map(([define]) => define).join(',\n  ')
+  const defaultCode = propsCode.map(([_, defaultValue]) => defaultValue).join(',\n  ')
   return `
-    const props = withDefaults(defineProps<{
-      ${defineCode}
-    }>(), {
-      ${defaultCode}
-    })
-  `
+const props = withDefaults(defineProps<{
+  ${defineCode}
+}>(), {
+  ${defaultCode}
+})
+`
 }
 
 function generateDefinePropsCode(props: GeneratePropsCodeOptions['props']) {
@@ -35,11 +35,11 @@ function generateDefinePropsCode(props: GeneratePropsCodeOptions['props']) {
       type: ${type},
       required: ${isRequired},
     }`
-  }).join(',\n')
+  }).join(',\n  ')
 
   return `
-  const props = defineProps({
-    ${propsCode}
-  })
-  `
+const props = defineProps({
+  ${propsCode}
+})
+`
 }

@@ -6,7 +6,8 @@
   },
   "editor.formatOnSave": false,
   "cSpell.words": [
-    "mingcute"
+    "mingcute",
+    "Splitpanes"
   ],
   "vue.codeActions.enabled": false,
   "unocss.root": [

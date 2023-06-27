@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/quotes */
-import { compile } from 'vue'
 import type { GeneratePropsCodeOptions, GenerateStyleCodeOptions } from '../types'
 import { generateTemplateStyleCode } from './css'
 import { generateTemplatePropsCode } from './define'
@@ -33,7 +32,7 @@ export function buttonComponentDefine(config: {
     props: {
       loading: [false, 'boolean', false],
       iconClass: [false, 'string | string[] | Record<string, boolean>', ''],
-      loadingClass: [false, 'string | string[] | Record<string, boolean>', 'i-mingcute:loading-fill animate-spin text-1em mr-1em'],
+      loadingClass: [false, 'string | string[] | Record<string, boolean>', 'i-mingcute:loading-fill animate-spin text-1em mr-0.1em'],
       type: [false, `'primary' | 'warning' | 'danger' | 'success' | 'info' | 'default'`, 'default'],
       size: [false, `'large' | 'medium' | 'normal' | 'small' | 'mini'`, 'normal'],
       ...propsOptions,
@@ -41,30 +40,27 @@ export function buttonComponentDefine(config: {
   })
 
   const template = `
-  <script setup lang='ts'>
-  ${propsCode}
-  </script>
+<script setup lang='ts'>${propsCode}</script>
 
-  <template>
-    <button class="">
-      <template v-if="!props.loading && props.iconClass">
-        <slot name="icon">
-          <i :class="props.iconClass" />
-        </slot>
-      </template>
-      <template v-else-if="loading">
-        <slot name="loading">
-          <i :class="props.loadingClass" />
-        </slot>
-      </template>
-      <slot />
-    </button>
-  </template>
+<template>
+  <button class="">
+    <template v-if="!props.loading && props.iconClass">
+      <slot name="icon">
+        <i :class="props.iconClass"></i>
+      </slot>
+    </template>
+    <template v-else-if="loading">
+      <slot name="loading">
+        <i :class="props.loadingClass"></i>
+      </slot>
+    </template>
+    <slot></slot>
+  </button>
+</template>
+${styleCode}
+`
 
-  ${styleCode}
-  `
   return [
     template,
-    compile(template),
   ]
 }
