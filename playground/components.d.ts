@@ -7,8 +7,10 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    copy: typeof import('./src/components/Playground copy.vue')['default']
     Playgound: typeof import('./src/components/Playgound.vue')['default']
     Playground: typeof import('./src/components/Playground.vue')['default']
+    PlaygroundVue: typeof import('./src/components/PlaygroundVue.vue')['default']
     Preview: typeof import('./src/components/Preview.vue')['default']
     ResponsiveContainer: typeof import('./src/components/ResponsiveContainer.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

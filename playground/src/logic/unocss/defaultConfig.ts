@@ -9,7 +9,7 @@ import {
 
 export default defineConfig({
   shortcuts: [
-    ['btn', 'px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600'],
+    ['btn', 'px-xl py-1 rounded-md bg-blue-500 text-white hover:bg-blue-600'],
   ],
   presets: [
     presetUno(),
@@ -25,10 +25,7 @@ export default defineConfig({
     }),
   ],
   transformers: [
-    transformerDirectives({
-      // the defaults
-      applyVariable: ['--at-apply', '--uno-apply', '--uno'],
-    }),
+    transformerDirectives(),
     transformerVariantGroup(),
   ],
 })

@@ -21,6 +21,7 @@ import TheButton from './TheButton.vue'
 
 <template>
   <TheButton :loading="true">TheButton</TheButton>
+  <TheButton class="primary">TheButton</TheButton>
 </template>
 
 <style>

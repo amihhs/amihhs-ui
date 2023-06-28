@@ -1,4 +1,4 @@
-import type { GenerateResult, UnoGenerator, UnocssPluginContext, UserConfig } from 'unocss'
+import type { GenerateOptions, GenerateResult, UnoGenerator, UnocssPluginContext, UserConfig } from 'unocss'
 import { createGenerator } from 'unocss'
 import { createAutocomplete } from '@unocss/autocomplete'
 import type { CompletionContext, CompletionResult } from '@codemirror/autocomplete'
@@ -6,6 +6,37 @@ import MagicString from 'magic-string'
 import type { Ref } from 'vue'
 import { customCSSLayerName, customConfigRaw, defaultConfig } from './config'
 import { evaluateUserConfig } from './shared'
+
+function useTransformer(uno: UnoGenerator<{}>) {
+  async function applyTransformers(code: MagicString, id: string, enforce?: 'pre' | 'post') {
+    let { transformers } = uno.config
+    transformers = (transformers ?? []).filter(i => i.enforce === enforce)
+
+    if (!transformers.length)
+      return
+
+    const fakePluginContext = { uno } as UnocssPluginContext
+    for (const { idFilter, transform } of transformers) {
+      if (idFilter && !idFilter(id))
+        continue
+      await transform(code, id, fakePluginContext)
+    }
+  }
+
+  async function getTransformedHTML(inputHTML: string, id = 'input.html') {
+    const steps = ['pre', undefined, 'post'] as const
+
+    let input = new MagicString(inputHTML)
+    for (const step of steps) {
+      await applyTransformers(input, id, step)
+      input = new MagicString(input.toString())
+    }
+
+    return input.toString()
+  }
+
+  return { getTransformedHTML }
+}
 
 export function logicUno(inputHTML: Ref<string>) {
   const init = ref(false)
@@ -17,7 +48,8 @@ export function logicUno(inputHTML: Ref<string>) {
   let autocomplete = createAutocomplete(uno as any)
   let initial = true
 
-  const { transformedHTML, getTransformedHTML } = useTransformer(uno, inputHTML)
+  const { getTransformedHTML } = useTransformer(uno)
+  const transformedHTML = computedAsync(async () => await getTransformedHTML(inputHTML.value))
 
   async function generate() {
     output.value = await uno.generate(transformedHTML.value || '')
@@ -64,7 +96,7 @@ export function logicUno(inputHTML: Ref<string>) {
           if (initial) {
             const { transformers = [] } = uno.config
             if (transformers.length)
-              transformedHTML.value = await getTransformedHTML()
+              transformedHTML.value = await getTransformedHTML(inputHTML.value)
             initial = false
           }
         }
@@ -85,32 +117,26 @@ export function logicUno(inputHTML: Ref<string>) {
   }
 }
 
-function useTransformer(uno: UnoGenerator<{}>, inputHTML: Ref<string>) {
-  const transformedHTML = computedAsync(async () => await getTransformedHTML())
+export function useResolverUnocss() {
+  const uno = createGenerator({}, defaultConfig.value as any)
+  const { getTransformedHTML } = useTransformer(uno)
 
-  async function applyTransformers(code: MagicString, id: string, enforce?: 'pre' | 'post') {
-    let { transformers } = uno.config
-    transformers = (transformers ?? []).filter(i => i.enforce === enforce)
-
-    if (!transformers.length)
-      return
-
-    const fakePluginContext = { uno } as UnocssPluginContext
-    for (const { idFilter, transform } of transformers) {
-      if (idFilter && !idFilter(id))
-        continue
-      await transform(code, id, fakePluginContext)
+  async function resolverUno(content: string, options?: GenerateOptions) {
+    const transformedHTML = await getTransformedHTML(content, options?.id)
+    const output = options?.id?.endsWith('.css') ? undefined : await uno.generate(transformedHTML || '', options)
+    return {
+      css: options?.id?.endsWith('.css') ? transformedHTML : output?.css,
+      output,
     }
   }
 
-  async function getTransformedHTML() {
-    const id = 'input.html'
-    const input = new MagicString(inputHTML.value)
-    await applyTransformers(input, id, 'pre')
-    await applyTransformers(input, id)
-    await applyTransformers(input, id, 'post')
-    return input.toString()
+  async function updateUnoConfig(customConfig: UserConfig = {}, content: string) {
+    uno.setConfig(customConfig, defaultConfig.value as any)
+    return await resolverUno(content)
   }
 
-  return { transformedHTML, getTransformedHTML }
+  return {
+    resolverUno,
+    updateUnoConfig,
+  }
 }

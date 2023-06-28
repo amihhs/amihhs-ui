@@ -1,14 +1,14 @@
 <script setup lang='ts'>
-const [template] = buttonComponentDefine({
-  css: {
-    presets: [
-      ['.primary', 'text-white bg-blue-5'],
-    ],
+const sandbox = {
+  files: {
+    'main.ts': '',
+    'index.html': '',
+    'style.css': '',
+    'tsconfig.json': '',
   },
-  slots: { icon: true, loading: true },
-})
+}
 </script>
 
 <template>
-  <Playground :template="template" />
+  <Playground :sandbox="sandbox" />
 </template>
