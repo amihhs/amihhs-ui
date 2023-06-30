@@ -1,7 +1,7 @@
 <!-- eslint-disable no-console -->
 <script setup lang='ts'>
 import { createSandbox } from '../logic/sandbox'
-import h from '../../../packages/components/button/src/basic/demo/index.html?raw'
+import h from '../../../packages/components/button/src/basic/demo/size.html?raw'
 import style from '../../../packages/components/button/src/basic/demo/style.css?raw'
 
 const props = withDefaults(defineProps<{

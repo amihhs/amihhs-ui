@@ -1,6 +1,6 @@
 // @unocss-include
 import resetCSS from '@unocss/reset/tailwind.css?raw'
-import h from '../../../../packages/components/button/src/basic/demo/index.html?raw'
+import h from '../../../../packages/components/button/src/basic/demo/size.html?raw'
 import { useResolverUnocss } from '../unocss'
 
 function create(sandboxContainer: HTMLElement | null = null) {
