@@ -41,5 +41,8 @@
   },
   "lint-staged": {
     "*.{vue,js,ts,jsx,tsx,md,json,yml},.eslintignore": "eslint --fix"
+  },
+  "dependencies": {
+    "highlight.js": "^11.8.0"
   }
 }

@@ -76,6 +76,13 @@ async function generateScriptCode(scripts: Map<string, string>) {
 
   return scriptCodes
 }
+function readSandBoxHeightScript() {
+  return `<script>
+    window.addEventListener('load',() => {
+      console.log('sandbox loaded',  document.body.scrollHeight, window.parent)
+    })
+  </script>`
+}
 async function generateHtmlCode(html: Map<string, string>) {
   const htmlCodes: string[] = []
   for (const [name, content] of html)
@@ -104,10 +111,11 @@ async function generateSandboxDoc(files: Map<string, string>): Promise<string> {
 <head>
   <meta charset="UTF-8">
   ${styleCodes.join('\n')}
+  ${readSandBoxHeightScript()}\n
 </head>
 <body>
   ${htmlCode.join('\n')}
-  ${scriptCodes.map(script => `<script>${script}</script>`).join('\n')}
+  ${scriptCodes.join('\n')}
 </body>
 </html>
   `
