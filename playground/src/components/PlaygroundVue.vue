@@ -37,7 +37,7 @@ provide('store', store)
 provide('clear-console', ref(false))
 provide('preview-options', previewOptions)
 throttledWatch([output, toRef(props, 'template')], () => {
-  console.log('update', output.value?.css)
+  // console.log('update', output.value?.css)
   store.setFiles({
     'reset.css': resetCss || '',
     'App.vue': generateAppTemplate(),

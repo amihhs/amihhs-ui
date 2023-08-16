@@ -1,6 +1,6 @@
 // @unocss-include
 import resetCSS from '@unocss/reset/tailwind.css?raw'
-import h from '../../../../packages/components/button/src/basic/demo/size.html?raw'
+import { v4 as uuidv4 } from 'uuid'
 import { useResolverUnocss } from '../unocss'
 
 function create(sandboxContainer: HTMLElement | null = null) {
@@ -78,10 +78,18 @@ async function generateScriptCode(scripts: Map<string, string>) {
 }
 function readSandBoxHeightScript() {
   return `<script>
-    window.addEventListener('load',() => {
-      console.log('sandbox loaded',  document.body.scrollHeight, window.parent)
-    })
-  </script>`
+  function listenMessage() {
+    const uuid = document.body.dataset.uuid
+    window.parent.postMessage({ type: 'sandbox-height', uuid, height: document.body.scrollHeight }, '*')
+  }
+  const resizeObserver = new ResizeObserver((entries) =>{
+    console.log('Body height changed:', entries[0].target.clientHeight)
+  })
+  window.addEventListener('load', () => {
+    resizeObserver.observe(document.body)
+    listenMessage()
+  })
+</script>`
 }
 async function generateHtmlCode(html: Map<string, string>) {
   const htmlCodes: string[] = []
@@ -89,7 +97,7 @@ async function generateHtmlCode(html: Map<string, string>) {
     htmlCodes.push(`<!-- ${name} -->\n${content}`)
   return htmlCodes
 }
-async function generateSandboxDoc(files: Map<string, string>): Promise<string> {
+async function generateSandboxDoc(uuid: string, files: Map<string, string>): Promise<string> {
   const { style, script, html } = filesClassify(files)
 
   const styleCodes: string[] = []
@@ -113,7 +121,7 @@ async function generateSandboxDoc(files: Map<string, string>): Promise<string> {
   ${styleCodes.join('\n')}
   ${readSandBoxHeightScript()}\n
 </head>
-<body>
+<body data-uuid="${uuid}">
   ${htmlCode.join('\n')}
   ${scriptCodes.join('\n')}
 </body>
@@ -124,24 +132,25 @@ async function generateSandboxDoc(files: Map<string, string>): Promise<string> {
 export function createSandbox() {
   const sandboxContainerRef = ref<HTMLElement | null>(null)
   const sandboxRef = ref<HTMLIFrameElement | null>(null)
-
+  const uuid = ref<string>(uuidv4())
   const { files, addFile, addFiles, removeFile, getFile } = sandboxFiles()
   function updateSandboxDoc(srcdoc: string) {
     if (!sandboxRef.value)
       return
+    sandboxRef.value.setAttribute('data-uuid', uuid.value)
     sandboxRef.value.setAttribute('srcdoc', srcdoc)
   }
   onMounted(() => {
     sandboxRef.value = create(sandboxContainerRef.value)
-    updateSandboxDoc(h)
   })
 
   throttledWatch([files], async () => {
-    const srcdoc = await generateSandboxDoc(files)
+    const srcdoc = await generateSandboxDoc(uuid.value, files)
     updateSandboxDoc(srcdoc)
-  })
+  }, { immediate: true, deep: true })
   return {
     sandboxContainerRef,
+    uuid,
 
     files,
     addFile,

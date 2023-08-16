@@ -7,7 +7,7 @@ import type { Ref } from 'vue'
 import { customCSSLayerName, customConfigRaw, defaultConfig } from './config'
 import { evaluateUserConfig } from './shared'
 
-function useTransformer(uno: UnoGenerator<{}>) {
+function useTransformer(uno: UnoGenerator<object>) {
   async function applyTransformers(code: MagicString, id: string, enforce?: 'pre' | 'post') {
     let { transformers } = uno.config
     transformers = (transformers ?? []).filter(i => i.enforce === enforce)

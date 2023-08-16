@@ -120,4 +120,22 @@ export default defineConfig({
     // TODO: workaround until they support native ESM
     noExternal: ['workbox-window', /vue-i18n/],
   },
+  optimizeDeps: {
+    exclude: [
+      '@iconify/utils/lib/loader/fs',
+      '@iconify/utils/lib/loader/install-pkg',
+      '@iconify/utils/lib/loader/node-loader',
+      '@iconify/utils/lib/loader/node-loaders',
+    ],
+  },
+  build: {
+    rollupOptions: {
+      external: [
+        '@iconify/utils/lib/loader/fs',
+        '@iconify/utils/lib/loader/install-pkg',
+        '@iconify/utils/lib/loader/node-loader',
+        '@iconify/utils/lib/loader/node-loaders',
+      ],
+    },
+  },
 })

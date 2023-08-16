@@ -3,7 +3,7 @@
 layout: home
 
 hero:
-  name: "handless-ui"
+  name: "amihhs-ui"
   text: "Handless ui based on Unocss"
   actions:
     - theme: brand
