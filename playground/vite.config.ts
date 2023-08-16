@@ -7,6 +7,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Unocss from 'unocss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 import VueI18n from '@intlify/unplugin-vue-i18n/vite'
+import Markdown from 'vite-plugin-md'
 
 // import VueDevTools from 'vite-plugin-vue-devtools'
 import Layouts from 'vite-plugin-vue-layouts'
@@ -24,7 +25,9 @@ export default defineConfig({
   plugins: [
     Vue({
       reactivityTransform: true,
+      include: [/\.vue$/, /\.md$/], // <--
     }),
+    Markdown(),
 
     // https://github.com/JohnCampionJr/vite-plugin-vue-layouts
     Layouts(),
