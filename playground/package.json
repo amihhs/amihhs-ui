@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "vite build",
+    "ssg": "vite-ssg build",
     "dev": "vite --port 8001",
     "lint": "eslint .",
     "typecheck": "vue-tsc --noEmit",
