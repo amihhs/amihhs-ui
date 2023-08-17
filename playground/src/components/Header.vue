@@ -8,7 +8,7 @@
     dark="border-slate-7 bg-gray-8"
   >
     <div>
-      <img src="/logo.svg" alt="LOGO">
+      <img w-30 src="/logo.svg" alt="LOGO">
     </div>
     <div
       class="flex items-center gap-4xl divide-(x-3 slate-2)"
