@@ -14,10 +14,13 @@ const demos: Record<string, DirMap | null> = {}
 if (buttonDemo.children) {
   for (const item of buttonDemo.children) {
     const name = item.name
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     demos[name] = item.children?.filter(v => v.name === 'demo') || null
   }
 }
 
+// eslint-disable-next-line no-console
 console.log(buttonDemo, demos)
 const sandbox = {
   'index.html': h,
