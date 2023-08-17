@@ -83,7 +83,7 @@ function readSandBoxHeightScript() {
     window.parent.postMessage({ type: 'sandbox-height', uuid, height: document.body.scrollHeight }, '*')
   }
   const resizeObserver = new ResizeObserver((entries) =>{
-    console.log('Body height changed:', entries[0].target.clientHeight)
+    listenMessage()
   })
   window.addEventListener('load', () => {
     resizeObserver.observe(document.body)

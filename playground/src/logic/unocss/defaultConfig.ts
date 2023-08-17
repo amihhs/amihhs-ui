@@ -21,7 +21,7 @@ export default defineConfig({
         'display': 'inline-block',
         'vertical-align': 'text-bottom',
       },
-      cdn: 'https://esm.sh/'
+      cdn: 'https://esm.sh/',
     }),
   ],
   transformers: [

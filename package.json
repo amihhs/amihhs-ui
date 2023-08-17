@@ -18,10 +18,7 @@
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc --noEmit",
     "prepare": "husky install",
-    "play": "pnpm -C playground run dev",
-    "docs:dev": "pnpm -C docs run dev",
-    "docs:build": "pnpm -C docs run build",
-    "docs:preview": "pnpm -C docs run preview"
+    "play": "pnpm -C playground run dev"
   },
   "dependencies": {
     "highlight.js": "^11.8.0"
@@ -39,7 +36,7 @@
     "lint-staged": "^14.0.0",
     "typescript": "^5.1.6",
     "unbuild": "^1.2.1",
-    "unocss": "^0.55.0",
+    "unocss": "^0.55.1",
     "vitest": "^0.34.1"
   },
   "lint-staged": {

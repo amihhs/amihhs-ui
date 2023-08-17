@@ -1,11 +1,13 @@
 import type { UserConfig } from '@unocss/core'
-import { decompressFromEncodedURIComponent as decode, compressToEncodedURIComponent as encode } from 'lz-string'
+import lzString from 'lz-string'
+import { isClient } from '@vueuse/core'
 import { evaluateUserConfig } from './shared'
 import defaultConfigRaw from './defaultConfig.ts?raw'
 
+const { decompressFromEncodedURIComponent: decode, compressToEncodedURIComponent: encode } = lzString
 export const STORAGE_KEY = 'unocss:config'
 export const customCSSLayerName = 'playground'
-const params = new URLSearchParams(window.location.search || localStorage.getItem(STORAGE_KEY) || '')
+const params = isClient ? new URLSearchParams(window.location.search || localStorage.getItem(STORAGE_KEY) || '') : new URLSearchParams('')
 
 export const defaultConfig = ref<UserConfig | undefined>()
 export const customConfigRaw = ref(decode(params.get('config') || '') || defaultConfigRaw)
