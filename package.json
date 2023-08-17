@@ -18,10 +18,7 @@
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc --noEmit",
     "prepare": "husky install",
-    "play": "pnpm -C playground run dev",
-    "docs:dev": "pnpm -C docs run dev",
-    "docs:build": "pnpm -C docs run build",
-    "docs:preview": "pnpm -C docs run preview"
+    "play": "pnpm -C playground run dev"
   },
   "dependencies": {
     "highlight.js": "^11.8.0"
