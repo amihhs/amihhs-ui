@@ -7,7 +7,9 @@
     class="flex items-center justify-between py-xl px-4xl text-lg border-(b-1 slate-1)"
     dark="border-slate-7"
   >
-    <div>LOGO</div>
+    <div>
+      <img src="/logo.svg" alt="LOGO">
+    </div>
     <div
       class="flex items-center gap-4xl divide-(x-3 slate-2)"
       dark="divide-slate-7"
