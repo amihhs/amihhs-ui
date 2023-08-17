@@ -12,11 +12,14 @@ import Markdown from 'vite-plugin-md'
 // import VueDevTools from 'vite-plugin-vue-devtools'
 import Layouts from 'vite-plugin-vue-layouts'
 import generateSitemap from 'vite-ssg-sitemap'
+import globDirs from 'vite-plugin-dirs'
+import { alias } from '../alias'
 
 export default defineConfig({
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,
+      ...alias,
     },
   },
   server: {
@@ -28,6 +31,7 @@ export default defineConfig({
       include: [/\.vue$/, /\.md$/],
     }),
     Markdown(),
+    globDirs(),
 
     // https://github.com/JohnCampionJr/vite-plugin-vue-layouts
     Layouts(),

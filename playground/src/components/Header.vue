@@ -4,8 +4,8 @@
 
 <template>
   <div
-    class="flex items-center justify-between py-xl px-4xl text-lg border-(b-1 slate-1)"
-    dark="border-slate-7"
+    class="flex items-center justify-between py-xl px-4xl text-lg border-(b-1 slate-1) sticky top-0 z-9 bg-white"
+    dark="border-slate-7 bg-gray-8"
   >
     <div>LOGO</div>
     <div
@@ -30,7 +30,3 @@
     </div>
   </div>
 </template>
-
-<style lang='scss' scoped>
-
-</style>

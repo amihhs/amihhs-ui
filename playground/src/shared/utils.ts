@@ -22,3 +22,12 @@ export function createCodeHtml(language: string, code: string, trim: boolean): s
     language,
   }).value
 }
+
+export function transformComponentPath(path: string, ...args: string[]) {
+  path = path + (path.endsWith('/') ? '' : '/') + args.join('/')
+
+  if (path.startsWith('@components/'))
+    return path.replace('@components/', '../../../../../packages/')
+
+  return path
+}
