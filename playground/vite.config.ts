@@ -25,14 +25,16 @@ export default defineConfig({
   plugins: [
     Vue({
       reactivityTransform: true,
-      include: [/\.vue$/, /\.md$/], // <--
+      include: [/\.vue$/, /\.md$/],
     }),
     Markdown(),
 
     // https://github.com/JohnCampionJr/vite-plugin-vue-layouts
     Layouts(),
     // https://github.com/hannoeru/vite-plugin-pages
-    Pages(),
+    Pages({
+      extensions: ['vue', 'md'],
+    }),
 
     // https://github.com/antfu/unplugin-auto-import
     AutoImport({
