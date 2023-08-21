@@ -5,7 +5,7 @@
 <template>
   <div class="pt-10">
     <p class="text-6xl font-mono text-center font-900 max-w-300 m-auto leading-relaxed">
-      Handless UI Component Library Based on <span class="text-slate-9">UnoCSS</span>
+      Handless UI Component Library Based on UnoCSS
     </p>
     <div class="flex items-end justify-center gap-xl mt-20">
       <router-link to="/docs/quickly-start" class="px-xl rounded-lg py-sm bg-slate-7 text-white font-900">
