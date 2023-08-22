@@ -28,16 +28,16 @@
     "@commitlint/cli": "^17.7.1",
     "@commitlint/config-conventional": "^17.7.0",
     "@commitlint/types": "^17.4.4",
-    "@types/node": "^20.5.0",
-    "bumpp": "^9.1.1",
+    "@types/node": "^20.5.2",
+    "bumpp": "^9.2.0",
     "eslint": "^8.47.0",
     "esno": "^0.17.0",
     "husky": "^8.0.3",
-    "lint-staged": "^14.0.0",
+    "lint-staged": "^14.0.1",
     "typescript": "^5.1.6",
     "unbuild": "^1.2.1",
-    "unocss": "^0.55.1",
-    "vitest": "^0.34.1"
+    "unocss": "^0.55.2",
+    "vitest": "^0.34.2"
   },
   "lint-staged": {
     "*.{vue,js,ts,jsx,tsx,md,json,yml},.eslintignore": "eslint --fix"

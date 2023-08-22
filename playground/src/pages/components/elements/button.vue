@@ -1,13 +1,12 @@
 <script setup lang='ts'>
 import h from '@components/button/src/basic/demo/size.html?raw'
 import style from '@components/button/src/basic/demo/style.css?raw'
-import type { DirMap } from 'vite-plugin-dirs/types'
+import type { DirMap } from 'vite-plugin-dirs'
 
 // const e = await import('@components/button/src/basic/demo/size.html?raw')
 // console.log(e.default)
 
-const buttonDemo = import.meta.dirs(
-  '../../../../../packages/components/button/src',
+const buttonDemo = import.meta.dirs('../../../../../packages/components/button/src',
   { exhaustive: true },
 )
 const demos: Record<string, DirMap | null> = {}
