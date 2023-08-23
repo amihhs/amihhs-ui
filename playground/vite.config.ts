@@ -16,6 +16,7 @@ import globDirs from 'vite-plugin-dirs'
 import { alias } from '../alias'
 
 export default defineConfig({
+  assetsInclude: ['**/*.html'],
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,
@@ -23,7 +24,6 @@ export default defineConfig({
     },
   },
   server: {
-    base: '/playground/',
   },
   plugins: [
     Vue({

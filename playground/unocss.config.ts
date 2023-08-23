@@ -8,6 +8,7 @@ import {
   transformerVariantGroup,
 } from 'unocss'
 import { presetScrollbar } from 'unocss-preset-scrollbar'
+import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
 
 export default defineConfig({
   shortcuts: [
@@ -23,6 +24,9 @@ export default defineConfig({
       extraProperties: {
         'display': 'inline-block',
         'vertical-align': '-0.25em',
+      },
+      collections: {
+        custom: FileSystemIconLoader('./src/assets/icons'),
       },
     }),
     presetWebFonts({

@@ -7,8 +7,10 @@
     class="flex items-center justify-between py-xl px-4xl text-lg border-(b-1 slate-1) sticky top-0 z-9 bg-white"
     dark="border-slate-7 bg-gray-8"
   >
-    <div>
-      <img h-8 src="/logo.svg" alt="LOGO">
+    <div class="relative">
+      <div class="absolute transform -translate-y-1/2 left-0">
+        <i class="i-custom-logo text-22 align-0" />
+      </div>
     </div>
     <div
       class="flex items-center gap-4xl divide-(x-3 slate-2)"
