@@ -8,6 +8,7 @@ import Unocss from 'unocss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 import VueI18n from '@intlify/unplugin-vue-i18n/vite'
 import Markdown from 'vite-plugin-md'
+import Inspect from 'vite-plugin-inspect'
 
 // import VueDevTools from 'vite-plugin-vue-devtools'
 import Layouts from 'vite-plugin-vue-layouts'
@@ -15,8 +16,10 @@ import generateSitemap from 'vite-ssg-sitemap'
 import globDirs from 'vite-plugin-dirs'
 import { alias } from '../alias'
 
+// custom plugin
+import { DemoLoaderPlugin } from './plugins/loader-demo/src'
+
 export default defineConfig({
-  assetsInclude: ['**/*.html'],
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,
@@ -26,6 +29,7 @@ export default defineConfig({
   server: {
   },
   plugins: [
+    Inspect(),
     Vue({
       reactivityTransform: true,
       include: [/\.vue$/, /\.md$/],
@@ -104,6 +108,11 @@ export default defineConfig({
     }),
     // https://github.com/webfansplz/vite-plugin-vue-devtools
     // VueDevTools(),
+
+    DemoLoaderPlugin({
+      paths: '@components',
+      childrenResolveBase: 'src',
+    }),
   ],
 
   // https://github.com/vitest-dev/vitest

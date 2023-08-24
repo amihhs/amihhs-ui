@@ -47,6 +47,7 @@
     "unplugin-vue-components": "^0.25.1",
     "vite": "^4.4.9",
     "vite-plugin-dirs": "^0.0.3",
+    "vite-plugin-inspect": "^0.7.38",
     "vite-plugin-md": "^0.21.5",
     "vite-plugin-pages": "^0.31.0",
     "vite-plugin-pwa": "^0.16.4",

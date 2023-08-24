@@ -1,14 +1,20 @@
 <script setup lang='ts'>
 import type { DirMap } from 'vite-plugin-dirs'
+import BUTTON_DEMOS from 'virtual:demo-loader/button'
+import DEMOS from 'virtual:demo-loader'
 
-const e = await import('@components/button/src/basic/demo/size.html?raw')
-console.log(e.default)
+// const e = await import('@components/button/src/basic/demo/size.html?raw')
+// console.log(e.default)
 // @components/button/src/basic/demo/secondary.html?raw
+
+// eslint-disable-next-line no-console
+console.log(BUTTON_DEMOS)
+// eslint-disable-next-line no-console
+console.log(DEMOS)
 
 const buttonDemo = import.meta.dirs('../../../../../packages/components/button/src',
   { exhaustive: true },
 )
-const filePrefix = '../../../../../packages/components/button/src'
 const demos: Record<string, DirMap | null> = {}
 if (buttonDemo.children) {
   for (const item of buttonDemo.children) {
@@ -21,7 +27,6 @@ if (buttonDemo.children) {
 
 // eslint-disable-next-line no-console
 console.log(buttonDemo, demos)
-// const c = import.meta.glob('../../../../../packages/components/button/src/basic/demo/*.html', { eager: true })
 
 const sandboxes = reactive<{ name: string; sandbox: Record<string, string> }[]>([])
 // async function generateSandboxContent() {
