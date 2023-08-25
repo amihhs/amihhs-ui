@@ -14,10 +14,8 @@ import Inspect from 'vite-plugin-inspect'
 import Layouts from 'vite-plugin-vue-layouts'
 import generateSitemap from 'vite-ssg-sitemap'
 import globDirs from 'vite-plugin-dirs'
+import FilesLoader from 'vite-plugin-files-loader'
 import { alias } from '../alias'
-
-// custom plugin
-import { DemoLoaderPlugin } from './plugins/loader-demo/src'
 
 export default defineConfig({
   resolve: {
@@ -109,7 +107,7 @@ export default defineConfig({
     // https://github.com/webfansplz/vite-plugin-vue-devtools
     // VueDevTools(),
 
-    DemoLoaderPlugin({
+    FilesLoader({
       paths: '@components',
       resolveChildrenBase: 'src',
     }),
