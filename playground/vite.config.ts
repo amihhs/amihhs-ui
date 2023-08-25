@@ -111,7 +111,7 @@ export default defineConfig({
 
     DemoLoaderPlugin({
       paths: '@components',
-      childrenResolveBase: 'src',
+      resolveChildrenBase: 'src',
     }),
   ],
 

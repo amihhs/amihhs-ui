@@ -22,7 +22,8 @@
       "vite-plugin-vue-component-preview/client",
       "vite-plugin-vue-layouts/client",
       "vite-plugin-pwa/client",
-      "vite-plugin-dirs/client"
+      "vite-plugin-dirs/client",
+      "vite-plugin-files-loader/client"
     ],
     "paths": {
       "~/*": ["src/*"]

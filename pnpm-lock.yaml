@@ -160,6 +160,9 @@ importers:
       vite-plugin-dirs:
         specifier: ^0.0.3
         version: 0.0.3
+      vite-plugin-files-loader:
+        specifier: ^1.0.0
+        version: 1.0.0(vite@4.4.9)
       vite-plugin-inspect:
         specifier: ^0.7.38
         version: 0.7.38(rollup@2.79.1)(vite@4.4.9)
@@ -9993,6 +9996,15 @@ packages:
       magic-string: 0.30.3
       micromatch: 4.0.5
       ufo: 1.2.0
+    dev: true
+
+  /vite-plugin-files-loader@1.0.0(vite@4.4.9):
+    resolution: {integrity: sha512-TKpRYO4Z4yqK0lxb6ry4dX1DCIgpclo1qPP0ggjgxnRxcgZVZ1Sg+deSiPaGlIP/uWxRQdj+ASC+wpwf1KfK1w==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      vite: ^4.0.0 || ^3.0.0
+    dependencies:
+      vite: 4.4.9(@types/node@20.5.2)(sass@1.66.1)
     dev: true
 
   /vite-plugin-inspect@0.7.38(rollup@2.79.1)(vite@4.4.9):
