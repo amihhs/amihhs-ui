@@ -13,7 +13,7 @@ for (const item of BUTTON_DEMOS.children) {
   demos[item.name] = demoDir.children as FilesLoaderFile[]
 }
 
-console.log('demos', demos)
+// console.log('demos', demos)
 const sandboxes = reactive<{ name: string; sandbox: Record<string, string> }[]>([])
 async function generateSandboxContent() {
   for (const name in demos) {
