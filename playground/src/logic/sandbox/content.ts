@@ -1,3 +1,4 @@
+// @unocss-include
 import type { FilesLoaderFile } from 'vite-plugin-files-loader'
 import resetCSS from '@unocss/reset/tailwind.css?raw'
 import { useResolverUnocss } from '../unocss'
