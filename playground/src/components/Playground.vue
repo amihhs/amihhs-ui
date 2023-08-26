@@ -59,25 +59,26 @@ onMounted(() => {
     <div
       class="border-(2 slate-2) rounded-xl overflow-hidden mt-sm"
       dark="border-slate-7"
+      :class="[['all'].includes(showType) ? 'grid grid-cols-2 items-stretch' : '']"
     >
       <div v-show="['preview', 'all'].includes(showType)" ref="sandboxContainerRef" class="m-sm" />
-      <div v-show="['code', 'all'].includes(showType)">
+      <div v-show="['code', 'all'].includes(showType)" class="flex flex-col ">
         <div
           class="flex items-center border-(b-1 slate-6) font-mono text-sm bg-slate-8 overflow-x-auto scrollbar-default"
           dark="bg-slate-9"
         >
           <div
             v-for="[name] in files" :key="name"
-            class="cursor-pointer p-2 border-b-3"
+            class="cursor-pointer p-2 border-b-3 select-none"
             :class="[showName === name
-              ? 'text-slate-3 border-slate-1 dark-(text-slate-4 border-slate-4) font-bold'
+              ? 'text-slate-3 border-slate-1 dark-(text-slate-4 border-slate-4)'
               : 'border-transparent text-slate-5 dark:text-slate-6']"
             @click="changeShowName(name)"
           >
             {{ name }}
           </div>
         </div>
-        <PreviewCode :language="getFileType(showName)" :code="code" />
+        <PreviewCode class="flex-1" :language="getFileType(showName)" :code="code" />
       </div>
     </div>
   </div>

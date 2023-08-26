@@ -110,6 +110,7 @@ export default defineConfig({
     FilesLoader({
       paths: '@components',
       resolveChildrenBase: 'src',
+      extensions: ['.html', '.css', '.js', '.ts', '.md'],
     }),
   ],
 

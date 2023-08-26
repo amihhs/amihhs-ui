@@ -15,5 +15,6 @@ declare module 'vue' {
     PreviewCode: typeof import('./src/components/PreviewCode.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    UtilsCopy: typeof import('./src/components/UtilsCopy.vue')['default']
   }
 }

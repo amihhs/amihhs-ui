@@ -37,12 +37,13 @@ const lineNumbers = computed(() => {
 </script>
 
 <template>
-  <div class="bg-slate-8 p-3">
+  <div class="bg-slate-8 p-3 relative">
     <code ref="codeRef" class="flex">
-      <pre class="whitespace-pre-line mr-sm text-right select-none dark:text-slate-5">
+      <pre class="whitespace-pre-line mr-sm text-right select-none text-slate-4 dark:text-slate-5">
         {{ lineNumbers }}
       </pre>
-      <pre class="__code text-[#d19a66]" v-html="highlightCode" />
+      <pre class="__code text-[#d19a66] overflow-x-auto scrollbar-default pr-10" v-html="highlightCode" />
     </code>
+    <UtilsCopy :content="showCode" class="absolute top-1 right-1 text-slate-4" />
   </div>
 </template>

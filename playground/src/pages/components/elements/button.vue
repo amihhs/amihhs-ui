@@ -1,48 +1,27 @@
 <script setup lang='ts'>
 import BUTTON_DEMOS from 'virtual:files-loader/button'
 import type { FilesLoaderDir, FilesLoaderFile } from 'vite-plugin-files-loader'
+import { generateSandboxContent } from '~/logic/sandbox'
 
-// eslint-disable-next-line no-console
-console.log('BUTTON_DEMOS', BUTTON_DEMOS)
-
+// console.log('BUTTON_DEMOS', BUTTON_DEMOS)
 const demos: Record<string, FilesLoaderFile[]> = {}
 for (const item of BUTTON_DEMOS.children) {
-  if (!(item as FilesLoaderDir).children)
+  if (item.type !== 'directory' || item.children.length === 0)
     continue
-  const demoDir = (item as FilesLoaderDir).children.filter(v => v.name === 'demo')[0] as FilesLoaderDir
+  const demoDir = item.children.filter(v => v.name === 'demo')[0] as FilesLoaderDir
   demos[item.name] = demoDir.children as FilesLoaderFile[]
 }
 
 // console.log('demos', demos)
-const sandboxes = reactive<{ name: string; sandbox: Record<string, string> }[]>([])
-async function generateSandboxContent() {
-  for (const name in demos) {
-    const files = demos[name]?.filter(v => v.content) || []
-    const sandbox: Record<string, string> = {}
-    for (const file of files) {
-      // console.log(`${filePrefix}/${name}/demo/${file.name}?raw`)
-      sandbox[file.name] = file.content
-    }
+const sandboxes = ref<{ name: string; sandbox: Record<string, string> }[]>([])
 
-    sandboxes.push({
-      name,
-      sandbox,
-    })
-  }
-}
-
-// const sandbox = {
-//   'index.html': h,
-//   'style.css': style,
-// }
-
-await generateSandboxContent()
+sandboxes.value = await generateSandboxContent(demos)
 </script>
 
 <template>
   <div>
     <div v-for="item in sandboxes" :key="item.name">
-      <h2 class="capitalize">
+      <h2 class="capitalize font-bold text-4xl mb-lg">
         {{ item.name }}
       </h2>
       <Playground :sandbox="item.sandbox" />
