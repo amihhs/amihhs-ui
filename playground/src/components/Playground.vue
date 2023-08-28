@@ -1,18 +1,20 @@
-<!-- eslint-disable no-console -->
 <script setup lang='ts'>
-import { createSandbox } from '~/logic/sandbox'
+import { createSandbox, removeSortNumber } from '~/logic/sandbox'
 import { getFileType } from '~/shared'
 
 const props = withDefaults(defineProps<{
   sandbox: Record<string, string>
-}>(), {})
+  language?: 'html' | 'vue' | 'react'
+}>(), {
+  language: 'html',
+})
 
 const {
   uuid,
   sandboxContainerRef,
   files,
   addFiles,
-} = createSandbox()
+} = createSandbox(toRef(props, 'language'))
 
 const showType = ref<string>('preview')
 const switchMenu = {
@@ -30,6 +32,7 @@ function changeShowName(name: string) {
 onMounted(() => {
   // console.log('mounted', h)
   addFiles(props.sandbox)
+  // console.log('props.sandbox', props.sandbox, files)
   window.addEventListener('message', (e) => {
     const data = e.data
     if (data.type === 'sandbox-height' && data.uuid === uuid.value && sandboxContainerRef.value)
@@ -61,24 +64,34 @@ onMounted(() => {
       dark="border-slate-7"
       :class="[['all'].includes(showType) ? 'grid grid-cols-2 items-stretch' : '']"
     >
-      <div v-show="['preview', 'all'].includes(showType)" ref="sandboxContainerRef" class="m-sm" />
+      <div v-show="['preview', 'all'].includes(showType)">
+        <div v-if="props.language === 'html'" ref="sandboxContainerRef" class="m-sm" />
+        <PlaygroundVue v-else-if="props.language === 'vue'" :sandbox="props.sandbox" />
+      </div>
       <div v-show="['code', 'all'].includes(showType)" class="flex flex-col ">
-        <div
-          class="flex items-center border-(b-1 slate-6) font-mono text-sm bg-slate-8 overflow-x-auto scrollbar-default"
-          dark="bg-slate-9"
-        >
+        <template v-if="files.size">
           <div
-            v-for="[name] in files" :key="name"
-            class="cursor-pointer p-2 border-b-3 select-none"
-            :class="[showName === name
-              ? 'text-slate-3 border-slate-1 dark-(text-slate-4 border-slate-4)'
-              : 'border-transparent text-slate-5 dark:text-slate-6']"
-            @click="changeShowName(name)"
+            class="flex items-center border-(b-1 slate-6) font-mono text-sm bg-slate-8 overflow-x-auto scrollbar-default"
+            dark="bg-slate-9"
           >
-            {{ name }}
+            <div
+              v-for="[name] in files" :key="name"
+              class="cursor-pointer p-2 border-b-3 select-none"
+              :class="[showName === name
+                ? 'text-slate-3 border-slate-1 dark-(text-slate-4 border-slate-4)'
+                : 'border-transparent text-slate-5 dark:text-slate-6']"
+              @click="changeShowName(name)"
+            >
+              {{ removeSortNumber(name) }}
+            </div>
           </div>
-        </div>
-        <PreviewCode class="flex-1" :language="getFileType(showName)" :code="code" />
+          <PreviewCode class="flex-1" :language="getFileType(showName)" :code="code" />
+        </template>
+        <template v-else>
+          <div class="text-center text-4xl font-bold  py-4xl">
+            Not Found Files
+          </div>
+        </template>
       </div>
     </div>
   </div>

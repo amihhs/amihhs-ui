@@ -1,0 +1,6 @@
+Title: Basic 
+Description: A button made of some basic styles.
+Required:
+  UnoCSS:
+    - preset-uno: https://unocss.dev/presets/uno
+

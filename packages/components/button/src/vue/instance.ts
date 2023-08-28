@@ -1,3 +1,3 @@
-import type BasicButton from './basic/basic.vue'
+import type BasicButton from './BasicButton.vue'
 
 export type BasicButtonInstance = InstanceType<typeof BasicButton>

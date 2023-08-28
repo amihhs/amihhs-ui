@@ -2,32 +2,14 @@ export function generateAppTemplate() {
   const App = `
 <script setup>
 import './reset.css'
-import Playground from './Playground.vue'
+import './style.css'
+import Demo from './Demo.vue'
 </script>
 
 <template>
-  <Playground />
+  <Demo />
 </template>
 `
 
   return App
-}
-
-export function generatePlaygroundTemplate(style: string) {
-  const SFC = `
-<script setup>
-import TheButton from './TheButton.vue'
-</script>
-
-<template>
-  <TheButton :loading="true">TheButton</TheButton>
-  <TheButton class="primary">TheButton</TheButton>
-</template>
-
-<style>
-${style}
-</style>
-`
-
-  return SFC
 }

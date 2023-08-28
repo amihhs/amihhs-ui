@@ -7,8 +7,12 @@ export function getFileType(filename: string) {
   if (ext === 'css')
     return 'css'
   if (ext === 'js')
-    return 'js'
-  return 'unknown'
+    return 'javascript'
+  if (ext === 'ts')
+    return 'typescript'
+  if (ext === 'vue')
+    return 'javascript'
+  return 'html'
 }
 
 export function createCodeHtml(language: string, code: string, trim: boolean): string | null {

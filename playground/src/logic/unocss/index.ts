@@ -38,9 +38,16 @@ function useTransformer(uno: UnoGenerator<object>) {
   return { getTransformedHTML }
 }
 
-export function logicUno(inputHTML: Ref<string>) {
+export function logicUno(files: Ref<Record<string, string>>) {
   const init = ref(false)
+  const inputHTML = computed(() => {
+    let html = ''
 
+    for (const name in files.value)
+      html += `${files.value[name]}\n\n`
+
+    return html
+  })
   const uno = createGenerator({}, defaultConfig.value as any)
   const output = shallowRef<GenerateResult>()
 
@@ -121,7 +128,7 @@ export function useResolverUnocss() {
   const uno = createGenerator({}, defaultConfig.value as any)
   const { getTransformedHTML } = useTransformer(uno)
 
-  async function resolverUno(content: string, options?: GenerateOptions) {
+  async function resolverUno(content: string, options?: GenerateOptions<true>) {
     const transformedHTML = await getTransformedHTML(content, options?.id)
     const output = options?.id?.endsWith('.css') ? undefined : await uno.generate(transformedHTML || '', options)
     return {

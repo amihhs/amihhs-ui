@@ -2,9 +2,11 @@
 import { v4 as uuidv4 } from 'uuid'
 import { sandboxFiles } from './file'
 import { generateSandboxDoc } from './content'
+import type { ComponentDemo } from './types'
 
 export * from './file'
 export * from './content'
+export * from './types'
 
 function create(sandboxContainer: HTMLElement | null = null) {
   if (!sandboxContainer) {
@@ -31,7 +33,7 @@ function create(sandboxContainer: HTMLElement | null = null) {
   return sandbox
 }
 
-export function createSandbox() {
+export function createSandbox(language: Ref<ComponentDemo['type']> = ref('html')) {
   const sandboxContainerRef = ref<HTMLElement | null>(null)
   const sandboxRef = ref<HTMLIFrameElement | null>(null)
   const uuid = ref<string>(uuidv4())
@@ -50,7 +52,8 @@ export function createSandbox() {
   }, { immediate: true, deep: true })
 
   onMounted(() => {
-    sandboxRef.value = create(sandboxContainerRef.value)
+    if (language.value === 'html')
+      sandboxRef.value = create(sandboxContainerRef.value)
   })
   onUnmounted(() => {
     watchStop()

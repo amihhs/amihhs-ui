@@ -38,7 +38,7 @@ const lineNumbers = computed(() => {
 
 <template>
   <div class="bg-slate-8 p-3 relative">
-    <code ref="codeRef" class="flex">
+    <code ref="codeRef" class="flex h-full">
       <pre class="whitespace-pre-line mr-sm text-right select-none text-slate-4 dark:text-slate-5">
         {{ lineNumbers }}
       </pre>

@@ -1,56 +1,118 @@
 // @unocss-include
 import type { FilesLoaderFile } from 'vite-plugin-files-loader'
 import resetCSS from '@unocss/reset/tailwind.css?raw'
+import YAML from 'yaml'
 import { useResolverUnocss } from '../unocss'
 import { filesClassify } from './file'
+import type { ComponentDemo, ComponentYaml } from './types'
+import { generateAppTemplate } from '~/logic/vue'
+
+export function removeSortNumber(name: string) {
+  return name.replace(/\d+\.(\s+)?/, '')
+}
+export function sortNumber(name: string) {
+  const match = name.match(/\d+\.(\s+)?/)
+  return match ? Number.parseInt(match[0]) : 99999
+}
+export function basePrefixSort(a: FilesLoaderFile, b: FilesLoaderFile) {
+  const aPrefix = sortNumber(a.name)
+  const bPrefix = sortNumber(b.name)
+  if (a.language === b.language && aPrefix !== bPrefix)
+    return aPrefix - bPrefix
+  else if (a.language === b.language)
+    return a.name.localeCompare(b.name)
+  else
+    return b.language.localeCompare(a.language)
+}
+
+export function getPlaygroundType(name: string) {
+  if (name.toLocaleLowerCase() === 'vue')
+    return 'vue'
+  else if (name.toLocaleLowerCase() === 'react')
+    return 'react'
+  else
+    return 'html'
+}
 
 export async function generateSandboxContent(demos: Record<string, FilesLoaderFile[]>) {
-  const sandboxes: { name: string; sandbox: Record<string, string> }[] = []
+  const sandboxes: ComponentDemo[] = []
   for (const name in demos) {
-    const files = (demos[name]?.filter(v => v.content) || [])
-      .sort((a, b) => b.language.localeCompare(a.language))
+    const files = (demos[name] || []).sort((a, b) => basePrefixSort(a, b))
 
-    const sandbox: Record<string, string> = {}
-    for (const file of files)
-      sandbox[file.name] = file.content
+    const y = (files.filter(v => v.name === 'README.yaml')[0] as FilesLoaderFile)?.content
+    const yaml: ComponentYaml = y ? YAML.parse(y) : { Title: '', Description: '', Required: {} }
 
+    const type = getPlaygroundType(name)
+    let sandbox: Record<string, string> = {}
+
+    switch (type) {
+      case 'vue':
+        sandbox = await generateVueSandbox(files.filter(v => v.name !== 'README.yaml'))
+        break
+      case 'react':
+        for (const file of files.filter(v => v.name !== 'README.yaml'))
+          sandbox[file.name] = file.content
+        break
+      default:
+        for (const file of files.filter(v => v.name !== 'README.yaml'))
+          sandbox[file.name] = file.content
+        break
+    }
     sandboxes.push({
+      type: getPlaygroundType(name),
       name,
       sandbox,
+      yaml,
     })
   }
   return sandboxes
 }
 
+export async function generateVueSandbox(files: FilesLoaderFile[]) {
+  const { resolverUno } = useResolverUnocss()
+  const sandbox: Record<string, string> = {
+    'App.vue': generateAppTemplate(),
+  }
+  let needResolveStyleContent = ''
+  for (const file of files.filter(v => v.name !== 'README.yaml')) {
+    sandbox[file.name] = file.content
+    needResolveStyleContent += `${file.content}\n\n`
+  }
+  const { css } = await resolverUno(needResolveStyleContent)
+  sandbox['reset.css'] = resetCSS
+  sandbox['style.css'] = css || ''
+  return sandbox
+}
+
 export function multiFileHeader(fileName: string, content: string = '') {
   return `<div class="p-sm"><!-- ${fileName} -->\n
-  <h3 class="mb-sm font-bold font-mono text-center text-5">${fileName.split('.')[0]}</h3>\n
+  <h3 class="mb-sm font-bold font-mono text-center text-5">${removeSortNumber(fileName).split('.')[0]}</h3>\n
   ${content}</div>`
 }
 
 export async function generateStyleCode(styles: Map<string, string>, html: Map<string, string> = new Map()) {
   const { resolverUno } = useResolverUnocss()
   const styleCodes: string[] = []
+
+  let resolveContent = ''
+  const name = []
   if (html.size > 0) {
-    for (const [name, content] of html) {
-      const { css } = await resolverUno(content, { preflights: !styleCodes.length, id: name })
-      if (!css)
-        continue
-      styleCodes.push(`<style type="text/css" file="${name}">${css}</style>`)
+    for (const [_, content] of html) {
+      resolveContent += `\n\n${content}`
+      name.push(_)
     }
 
-    if (html.size > 1) {
-      const { css } = await resolverUno(multiFileHeader(''), { preflights: !styleCodes.length, id: 'all' })
-      styleCodes.unshift(`<style type="text/css">${css}</style>`)
-    }
+    if (html.size > 1)
+      resolveContent += `\n\n${multiFileHeader('')}`
   }
 
-  for (const [name, content] of styles) {
-    const { css } = await resolverUno(content, { preflights: !styleCodes.length, id: name })
-    if (!css)
-      continue
-    styleCodes.push(`<style type="text/css" file="${name}">${css}</style>`)
+  for (const [_, content] of styles) {
+    resolveContent += `\n\n${content}`
+    name.push(_)
   }
+
+  const { css } = await resolverUno(resolveContent, { preflights: !styleCodes.length })
+  styleCodes.push(`<style type="text/css" file="${JSON.stringify(name)}">${css}</style>`)
 
   styleCodes.unshift(`<style type="text/css">${resetCSS}</style>`)
   return styleCodes

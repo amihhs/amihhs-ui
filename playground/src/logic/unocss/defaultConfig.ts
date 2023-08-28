@@ -19,7 +19,7 @@ export default defineConfig({
       scale: 1.2,
       extraProperties: {
         'display': 'inline-block',
-        'vertical-align': 'text-bottom',
+        'vertical-align': '-0.25em',
       },
       cdn: 'https://esm.sh/',
     }),

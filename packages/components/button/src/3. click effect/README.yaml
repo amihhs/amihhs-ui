@@ -1,0 +1,9 @@
+Title: Click Effect 
+Description: Maybe your buttons need a little trigger feedback.
+Required:
+  JavaScript: 
+    - vueuse: https://vueuse.org/
+
+  UnoCss:
+    - preset-uno: https://unocss.dev/presets/uno
+

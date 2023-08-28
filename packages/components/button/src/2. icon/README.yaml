@@ -1,0 +1,10 @@
+Title: Icon Button 
+Description: Use with icon.
+Required:
+  UnoCSS:
+    - preset-uno: https://unocss.dev/presets/uno
+    - preset-icons: https://unocss.dev/presets/icons
+  
+  Other: 
+    - '@iconify-json/*': https://icon-sets.iconify.design/
+

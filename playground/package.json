@@ -47,17 +47,17 @@
     "unplugin-vue-components": "^0.25.1",
     "vite": "^4.4.9",
     "vite-plugin-dirs": "^0.0.3",
-    "vite-plugin-files-loader": "^1.0.1",
+    "vite-plugin-files-loader": "^1.0.2",
     "vite-plugin-inspect": "^0.7.38",
     "vite-plugin-md": "^0.21.5",
     "vite-plugin-pages": "^0.31.0",
     "vite-plugin-pwa": "^0.16.4",
-    "vite-plugin-vue-component-preview": "^1.1.6",
     "vite-plugin-vue-devtools": "1.0.0-rc.2",
     "vite-plugin-vue-layouts": "^0.8.0",
     "vite-ssg": "^0.23.1",
     "vite-ssg-sitemap": "^0.5.1",
     "vitest": "^0.34.2",
-    "vue-tsc": "^1.8.8"
+    "vue-tsc": "^1.8.8",
+    "yaml": "^2.3.1"
   }
 }
