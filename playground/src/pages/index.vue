@@ -21,7 +21,7 @@
         Components
       </router-link>
       <router-link to="/docs" class=" underline-(~ 2) text-slate-7 dark:text-slate-4 font-900 text-lg pb-1">
-        Docs >>
+        Docs <i class="i-ic:outline-keyboard-double-arrow-right" />
       </router-link>
     </div>
   </div>

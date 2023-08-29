@@ -15,6 +15,8 @@ import Layouts from 'vite-plugin-vue-layouts'
 import generateSitemap from 'vite-ssg-sitemap'
 import globDirs from 'vite-plugin-dirs'
 import FilesLoader from 'vite-plugin-files-loader'
+import { visualizer } from 'rollup-plugin-visualizer'
+import viteCompression from 'vite-plugin-compression'
 import { alias } from '../alias'
 
 export default defineConfig({
@@ -27,6 +29,10 @@ export default defineConfig({
   server: {
   },
   plugins: [
+    visualizer(),
+    viteCompression({
+      threshold: 10240,
+    }),
     Inspect(),
     Vue({
       reactivityTransform: true,
@@ -146,6 +152,7 @@ export default defineConfig({
     ],
   },
   build: {
+    minify: 'esbuild',
     rollupOptions: {
       external: [
         '@iconify/utils/lib/loader/fs',
@@ -153,6 +160,34 @@ export default defineConfig({
         '@iconify/utils/lib/loader/node-loader',
         '@iconify/utils/lib/loader/node-loaders',
       ],
+      output: {
+        assetFileNames: (assetInfo) => {
+          if (!assetInfo.name)
+            return 'assets/empty/[name]-[hash][extname]'
+          const info = assetInfo.name?.split('.')
+          let extType = info[info.length - 1]
+          if (/\.(png|jpe?g|gif|svg)(\?.*)?$/.test(assetInfo.name))
+            extType = 'img'
+          else if (/\.(woff2?|eot|ttf|otf)(\?.*)?$/i.test(assetInfo.name))
+            extType = 'fonts'
+          return `assets/${extType}/[name]-[hash][extname]`
+        },
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        manualChunks(id: string) {
+          if (id.includes('highlight.js'))
+            return '@highlight'
+          else if (id.includes('typescript'))
+            return '@typescript'
+          else if (id.includes('MonacoEditor'))
+            return '@MonacoEditor'
+          else if (id.includes('vue-repl') || id.includes('@vue/repl'))
+            return '@vue-repl'
+          else if (id.includes('@unocss'))
+            return '@unocss'
+        },
+      },
     },
+
   },
 })
