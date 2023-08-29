@@ -179,8 +179,6 @@ export default defineConfig({
             return '@highlight'
           else if (id.includes('typescript'))
             return '@typescript'
-          else if (id.includes('MonacoEditor'))
-            return '@MonacoEditor'
           else if (id.includes('vue-repl') || id.includes('@vue/repl'))
             return '@vue-repl'
           else if (id.includes('@unocss'))
