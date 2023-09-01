@@ -1,6 +1,7 @@
 <script setup lang='ts'>
 import DEMOS from 'virtual:files-loader'
 import type { FilesLoaderDir, FilesLoaderFile } from 'vite-plugin-files-loader'
+import { resolveImportPaths } from 'vite-plugin-files-loader'
 import type { ComponentDemo } from '~/logic/sandbox'
 import { generateSandboxContent, removeSortNumber } from '~/logic/sandbox'
 
@@ -9,9 +10,10 @@ const componentName = computed(() => route.params.name)
 const demos = ref<Record<string, FilesLoaderFile[]>>({})
 const sandboxes = ref<ComponentDemo[]>([])
 
-function getDemos() {
+async function getDemos() {
   const demos: Record<string, FilesLoaderFile[]> = {}
-  const itemDemos = DEMOS.__default.filter(v => v.name === componentName.value)[0] as FilesLoaderDir
+  const resolveDemos = await resolveImportPaths(DEMOS)
+  const itemDemos = resolveDemos.__default.filter(v => v.name === componentName.value)[0] as FilesLoaderDir
   if (!itemDemos)
     return demos
 
@@ -28,7 +30,7 @@ function getDemos() {
 }
 
 const watchStop = watch(componentName, async () => {
-  demos.value = getDemos()
+  demos.value = await getDemos()
   sandboxes.value = await generateSandboxContent(demos.value)
 
   // console.log('sandboxes', sandboxes.value, demos)

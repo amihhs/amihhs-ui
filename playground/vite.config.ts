@@ -78,28 +78,28 @@ export default defineConfig({
     // https://github.com/antfu/vite-plugin-pwa
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'safari-pinned-tab.svg'],
+      includeAssets: ['favicon.svg'],
       manifest: {
         name: 'amihhs-ui',
         short_name: 'amihhs-ui',
         theme_color: '#ffffff',
         icons: [
-          {
-            src: '/pwa-192x192.png',
-            sizes: '192x192',
-            type: 'image/png',
-          },
-          {
-            src: '/pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-          },
-          {
-            src: '/pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any maskable',
-          },
+          // {
+          //   src: '/pwa-192x192.png',
+          //   sizes: '192x192',
+          //   type: 'image/png',
+          // },
+          // {
+          //   src: '/pwa-512x512.png',
+          //   sizes: '512x512',
+          //   type: 'image/png',
+          // },
+          // {
+          //   src: '/pwa-512x512.png',
+          //   sizes: '512x512',
+          //   type: 'image/png',
+          //   purpose: 'any maskable',
+          // },
         ],
       },
     }),
@@ -117,6 +117,7 @@ export default defineConfig({
       paths: '@components',
       resolveChildrenBase: 'src',
       extensions: ['.html', '.css', '.js', '.ts', '.yaml', '.vue'],
+      dynamicImport: true,
     }),
   ],
 
@@ -149,6 +150,7 @@ export default defineConfig({
       '@iconify/utils/lib/loader/install-pkg',
       '@iconify/utils/lib/loader/node-loader',
       '@iconify/utils/lib/loader/node-loaders',
+      'vite-plugin-files-loader',
     ],
   },
   build: {
@@ -159,6 +161,7 @@ export default defineConfig({
         '@iconify/utils/lib/loader/install-pkg',
         '@iconify/utils/lib/loader/node-loader',
         '@iconify/utils/lib/loader/node-loaders',
+        'vite-plugin-files-loader',
       ],
       output: {
         assetFileNames: (assetInfo) => {
