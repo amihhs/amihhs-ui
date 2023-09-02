@@ -150,7 +150,6 @@ export default defineConfig({
       '@iconify/utils/lib/loader/install-pkg',
       '@iconify/utils/lib/loader/node-loader',
       '@iconify/utils/lib/loader/node-loaders',
-      'vite-plugin-files-loader',
     ],
   },
   build: {
@@ -161,7 +160,6 @@ export default defineConfig({
         '@iconify/utils/lib/loader/install-pkg',
         '@iconify/utils/lib/loader/node-loader',
         '@iconify/utils/lib/loader/node-loaders',
-        'vite-plugin-files-loader',
       ],
       output: {
         assetFileNames: (assetInfo) => {

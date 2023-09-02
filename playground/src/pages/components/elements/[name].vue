@@ -1,7 +1,7 @@
 <script setup lang='ts'>
 import DEMOS from 'virtual:files-loader'
 import type { FilesLoaderDir, FilesLoaderFile } from 'vite-plugin-files-loader'
-import { resolveImportPaths } from 'vite-plugin-files-loader'
+import { resolveImportPaths } from 'vite-plugin-files-loader/dist/shared'
 import type { ComponentDemo } from '~/logic/sandbox'
 import { generateSandboxContent, removeSortNumber } from '~/logic/sandbox'
 
