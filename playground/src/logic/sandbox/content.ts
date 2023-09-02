@@ -40,7 +40,7 @@ export async function generateSandboxContent(demos: Record<string, FilesLoaderFi
     const files = (demos[name] || []).sort((a, b) => basePrefixSort(a, b))
 
     const y = (files.filter(v => v.name === 'README.yaml')[0] as FilesLoaderFile)?.content
-    const yaml: ComponentYaml = y ? YAML.parse(y) : { Title: '', Description: '', Required: {} }
+    const yaml: ComponentYaml = y && typeof y === 'string' ? YAML.parse(y) : { Title: '', Description: '', Required: {} }
 
     const type = getPlaygroundType(name)
     let sandbox: Record<string, string> = {}
@@ -51,11 +51,11 @@ export async function generateSandboxContent(demos: Record<string, FilesLoaderFi
         break
       case 'react':
         for (const file of files.filter(v => v.name !== 'README.yaml'))
-          sandbox[file.name] = file.content
+          sandbox[file.name] = file.content as string
         break
       default:
         for (const file of files.filter(v => v.name !== 'README.yaml'))
-          sandbox[file.name] = file.content
+          sandbox[file.name] = file.content as string
         break
     }
     sandboxes.push({
@@ -75,7 +75,7 @@ export async function generateVueSandbox(files: FilesLoaderFile[]) {
   }
   let needResolveStyleContent = ''
   for (const file of files.filter(v => v.name !== 'README.yaml')) {
-    sandbox[file.name] = file.content
+    sandbox[file.name] = file.content as string
     needResolveStyleContent += `${file.content}\n\n`
   }
   const { css } = await resolverUno(needResolveStyleContent)
@@ -101,7 +101,6 @@ export async function generateStyleCode(styles: Map<string, string>, html: Map<s
       resolveContent += `\n\n${content}`
       name.push(_)
     }
-
     if (html.size > 1)
       resolveContent += `\n\n${multiFileHeader('')}`
   }
@@ -109,12 +108,15 @@ export async function generateStyleCode(styles: Map<string, string>, html: Map<s
   for (const [_, content] of styles) {
     resolveContent += `\n\n${content}`
     name.push(_)
+    const { css } = await resolverUno(content, { preflights: false, id: _ })
+    css && styleCodes.push(`<style type="text/css" file="${_}">${css}</style>`)
   }
 
   const { css } = await resolverUno(resolveContent, { preflights: !styleCodes.length })
   styleCodes.push(`<style type="text/css" file="${JSON.stringify(name)}">${css}</style>`)
 
   styleCodes.unshift(`<style type="text/css">${resetCSS}</style>`)
+
   return styleCodes
 }
 
@@ -126,7 +128,9 @@ export async function generateScriptCode(scripts: Map<string, string>) {
   return scriptCodes
 }
 
-export function readSandBoxHeightScript() {
+export function readSandBoxHeightScript(uuid?: string) {
+  const uuidString = () => `document.body.dataset.uuid = '${uuid}'`
+  const addUUIDString = uuid ? uuidString() : ''
   return `<script>
   function listenMessage() {
     const uuid = document.body.dataset.uuid
@@ -136,6 +140,7 @@ export function readSandBoxHeightScript() {
     listenMessage()
   })
   window.addEventListener('load', () => {
+    ${addUUIDString}
     resizeObserver.observe(document.body)
     listenMessage()
   })

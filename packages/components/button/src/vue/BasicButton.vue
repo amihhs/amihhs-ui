@@ -3,18 +3,20 @@ import { computed } from 'vue'
 
 const props = withDefaults(defineProps<{
   loading?: boolean
-  iconClass?: string | string[] | Record<string, boolean>
+  icon?: string | string[] | Record<string, boolean>
   loadingClass?: string | string[] | Record<string, boolean>
   type?: 'primary' | 'warning' | 'danger' | 'success' | 'default'
   size?: 'large' | 'medium' | 'small'
   category?: 'default' | 'secondary' | 'tertiary' | 'ghost' | 'dashed'
+  raw?: boolean
 }>(), {
   loading: false,
-  iconClass: '',
-  loadingClass: 'i-mingcute:loading-fill animate-spin text-1em mr-0.1em',
+  icon: '',
+  loadingClass: 'i-mingcute:loading-fill animate-spin text-1em -align-0.25em mr-0.1em',
   type: 'default',
   size: 'medium',
   category: 'default',
+  raw: false,
 })
 
 const presets = {
@@ -23,7 +25,7 @@ const presets = {
     warning: 'bg-yellow-5 text-white',
     danger: 'bg-red-5 text-white',
     success: 'bg-green-5 text-white',
-    default: 'bg-gray-5 text-gray-9',
+    default: 'bg-gray-2 text-gray-9',
   },
   secondary: {
     primary: 'bg-blue-2 text-blue-6',
@@ -56,21 +58,21 @@ const presets = {
 } as const
 
 const sizePresets = {
-  large: 'py-0.5 px-1.5 text-lg',
-  medium: 'py-0.25 px-1 text-md',
-  small: 'py-0.125 px-0.75 text-3',
+  large: 'py-2 px-2xl text-lxl rounded-lg',
+  medium: 'py-1 px-lg text-md rounded-md',
+  small: 'py-0.5 px-3 text-3 rounded-md',
 } as const
 
 const presetClass = computed(() => {
-  return `${presets[props.category][props.type]} ${sizePresets[props.size]}`
+  return props.raw ? '' : `${presets[props.category][props.type]} ${sizePresets[props.size]} ${props.loading ? 'cursor-not-allowed' : ''}`
 })
 </script>
 
 <template>
   <button :class="presetClass">
-    <template v-if="!props.loading && props.iconClass">
+    <template v-if="!props.loading && props.icon">
       <slot name="icon">
-        <i :class="props.iconClass" />
+        <i :class="props.icon" />
       </slot>
     </template>
     <template v-else-if="props.loading">

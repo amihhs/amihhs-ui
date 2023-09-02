@@ -64,9 +64,9 @@ onMounted(() => {
       dark="border-slate-7"
       :class="[['all'].includes(showType) ? 'grid grid-cols-2 items-stretch' : '']"
     >
-      <div v-show="['preview', 'all'].includes(showType)">
-        <div v-if="props.language === 'html'" ref="sandboxContainerRef" class="m-sm" />
-        <PlaygroundVue v-else-if="props.language === 'vue'" :sandbox="props.sandbox" />
+      <div v-show="['preview', 'all'].includes(showType)" ref="sandboxContainerRef" class="m-sm">
+        <div v-if="props.language === 'html'" />
+        <PlaygroundVue v-else-if="props.language === 'vue'" :uuid="uuid" :sandbox="props.sandbox" />
       </div>
       <div v-show="['code', 'all'].includes(showType)" class="flex flex-col ">
         <template v-if="files.size">

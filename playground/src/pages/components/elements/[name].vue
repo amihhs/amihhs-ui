@@ -1,7 +1,10 @@
 <script setup lang='ts'>
 import DEMOS from 'virtual:files-loader'
 import type { FilesLoaderDir, FilesLoaderFile } from 'vite-plugin-files-loader'
-import { resolveImportPaths } from 'vite-plugin-files-loader/dist/shared'
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+import { resolveImportPaths } from 'vite-plugin-files-loader/shared'
 import type { ComponentDemo } from '~/logic/sandbox'
 import { generateSandboxContent, removeSortNumber } from '~/logic/sandbox'
 
@@ -12,8 +15,8 @@ const sandboxes = ref<ComponentDemo[]>([])
 
 async function getDemos() {
   const demos: Record<string, FilesLoaderFile[]> = {}
-  const resolveDemos = await resolveImportPaths(DEMOS)
-  const itemDemos = resolveDemos.__default.filter(v => v.name === componentName.value)[0] as FilesLoaderDir
+  const resolveDemos = (await resolveImportPaths(DEMOS)) as Record<string, FilesLoaderFile[]>
+  const itemDemos = resolveDemos.__default.filter(v => v.name === componentName.value)[0] as unknown as FilesLoaderDir
   if (!itemDemos)
     return demos
 
@@ -29,9 +32,12 @@ async function getDemos() {
   return demos
 }
 
+const loading = ref(false)
 const watchStop = watch(componentName, async () => {
+  loading.value = true
   demos.value = await getDemos()
   sandboxes.value = await generateSandboxContent(demos.value)
+  loading.value = false
 
   // console.log('sandboxes', sandboxes.value, demos)
 }, { immediate: true })
@@ -40,7 +46,10 @@ onUnmounted(watchStop)
 
 <template>
   <div>
-    <template v-if="Object.keys(demos).length">
+    <div v-if="loading" class="text-center text-6 font-bold font-mono">
+      loading...
+    </div>
+    <template v-else-if="Object.keys(demos).length">
       <div v-for="item in sandboxes" :key="item.name" class="mb-6xl">
         <h2 class="capitalize font-bold text-3xl mb-lg">
           {{ item.yaml.Title || removeSortNumber(item.name) }}
